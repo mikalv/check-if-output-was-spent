@@ -1,4 +1,4 @@
-# Checking which our outputs were already spent
+# Checking which outputs are ours and which were already spent
 The example shows how to check which outputs in a given [Monero](https://getmonero.org/)
 transaction have already been spent. For this purpose, private view and spend keys,
 and address are required.
