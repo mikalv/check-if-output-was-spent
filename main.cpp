@@ -220,6 +220,8 @@ int main(int ac, const char* av[]) {
 
             // public tx key is combined with our private view key
             // to create, so called, derived key.
+            // the derived key is used to produce the key_image
+            // that we want.
             crypto::key_derivation derivation;
 
             if (!generate_key_derivation(pub_tx_key, private_view_key, derivation))
