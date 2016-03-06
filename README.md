@@ -6,8 +6,7 @@ and address are required.
 
 ## Pre-requisites
 
-Everything here was done and tested
-on Xubuntu 16.04 Beta 1 x86_64.
+Everything here was done and tested on Xubuntu 16.04 Beta 1 x86_64.
 
 Instruction for Monero compilation:
  - [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-xubuntu-16-04-beta-1/)
@@ -23,32 +22,21 @@ The main part of the example is main.cpp.
 
 ```
 ./checkoutputs -h
+
+checkoutputs, check which outputs in a given tx are ours and wich were spent:
+  -h [ --help ] [=arg(=1)] (=0) produce help message
+  -t [ --txhash ] arg           transaction hash
+  -v [ --viewkey ] arg          private view key string
+  -s [ --spendkey ] arg         private spend key string
+  -a [ --address ] arg          monero address string
+  -b [ --bc-path ] arg          path to lmdb blockchain
+  --testnet [=arg(=1)] (=0)     is the address from testnet network
 ```
 
 ## Example input and output
 
 
-## Compile this example
-The dependencies are same as those for Monero, so I assume Monero compiles
-correctly. If so then to download and compile this example, the following
-steps can be executed:
 
-```bash
-# download the source code
-git clone https://github.com/moneroexamples/ring-signatures.git
-
-# enter the downloaded sourced code folder
-cd ring-signatures
-
-# create the makefile
-cmake .
-
-# compile
-make
-```
-
-After this, `rings` executable file should be present in access-blockchain-in-cpp
-folder. How to use it, can be seen in the above example outputs.
 
 
 ## How can you help?
