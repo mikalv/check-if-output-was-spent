@@ -182,17 +182,14 @@ int main(int ac, const char* av[]) {
 
     // having our transaction, first we check which output in that
     // transactions are ours. For this we need to go through all outputs
-    // in a transaction, including miner reward in the given block in case
-    // we found the block containing this transaction.
+    // in a transaction.
 
     std::vector<size_t> outputs_ids;
 
     uint64_t money_transfered {0};
-    uint64_t miner_money_transfered {0};
 
     // look for our outputs in the transaction and the corresponding block reward
     cryptonote::lookup_acc_outs(account_keys, tx, outputs_ids, money_transfered);
-    cryptonote::lookup_acc_outs(account_keys, blk.miner_tx, outputs_ids, miner_money_transfered);
 
     // get tx public key from extras field
     crypto::public_key pub_tx_key = cryptonote::get_tx_pub_key_from_extra(tx);
