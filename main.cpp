@@ -177,7 +177,9 @@ int main(int ac, const char* av[]) {
     // lets check our keys
     print("private view key : {}\n", private_view_key);
     print("private spend key: {}\n", private_spend_key);
-    print("address          : {}\n\n\n", address);
+    print("address          : {}\n", address);
+
+
 
 
     // having our transaction, first we check which output in that
@@ -190,6 +192,9 @@ int main(int ac, const char* av[]) {
 
     // look for our outputs in the transaction and the corresponding block reward
     cryptonote::lookup_acc_outs(account_keys, tx, outputs_ids, money_transfered);
+
+    print("money received   : {:0.6f}\n\n\n", money_transfered / 1e12);
+
 
     // get tx public key from extras field
     crypto::public_key pub_tx_key = cryptonote::get_tx_pub_key_from_extra(tx);
