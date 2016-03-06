@@ -4,7 +4,7 @@ transaction have already been spent. For this purpose, private view and spend ke
 and address are required.
 
 
-## Pre-requisites
+## Prerequisites
 
 Everything here was done and tested on Xubuntu 16.04 Beta 1 x86_64.
 
@@ -19,7 +19,7 @@ The main part of the example is main.cpp.
 int main(int ac, const char* av[]) {
 
 
-    // argument parsing and processing removed 
+    // argument parsing and processing removed
 
     print("\n\ntx hash          : {} in block no. {}\n\n",
           tx_hash, cryptonote::get_block_height(blk));
