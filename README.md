@@ -6,11 +6,12 @@ and address are required.
 
 ## Prerequisites
 
-Everything here was done and tested on Xubuntu 16.04 Beta 1 x86_64.
+The code was written and tested on Xubuntu 16.04 Beta 1 x86_64.
 
 Instruction for Monero compilation:
  - [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-xubuntu-16-04-beta-1/)
 
+The Monero C++ development environment was set as shown in the above link.
 
 ## C++ code
 The main part of the example is main.cpp.
@@ -18,8 +19,9 @@ The main part of the example is main.cpp.
 ```c++
 int main(int ac, const char* av[]) {
 
-
+    // ...
     // argument parsing and processing removed
+    // to save some space here
 
     print("\n\ntx hash          : {} in block no. {}\n\n",
           tx_hash, cryptonote::get_block_height(blk));
@@ -132,11 +134,27 @@ checkoutputs, check which outputs in a given tx are ours and wich were spent:
   --testnet [=arg(=1)] (=0)     is the address from testnet network
 ```
 
-## Example input and output
+## Compile this example
 
+If so then to download and compile this example, the following
+steps can be executed:
 
+```bash
+# download the source code
+git clone https://github.com/moneroexamples/check-if-output-was-spent.git
 
+# enter the downloaded sourced code folder
+cd check-if-output-was-spent
 
+# create the makefile
+cmake .
+
+# compile
+make
+```
+
+The Monero C++ development environment was set as shown in the following link:
+- [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-xubuntu-16-04-beta-1/)
 
 ## How can you help?
 
