@@ -251,7 +251,7 @@ int main(int ac, const char* av[]) {
 
                 if (!mcore.find_tx_with_key_image(key_image, tx_with_the_key, true))
                 {
-                    cerr << "Transaction with the spend key not found O.o?" << endl;
+                    cerr << "\nTransaction with the spend key not found O.o?" << endl;
                     return 1;
                 }
 
