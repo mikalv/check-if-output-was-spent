@@ -134,6 +134,49 @@ checkoutputs, check which outputs in a given tx are ours and wich were spent:
   --testnet [=arg(=1)] (=0)     is the address from testnet network
 ```
 
+## Example result 1
+
+```bash
+./checkoutputs
+```
+
+```bash
+tx hash          : <cda104278309e1637bbe8da841adb25d5d4f541de428e8e3808c83f9a71fe22e> in block no. 985103
+
+private view key : <9c2edec7636da3fbb343931d6c3d6e11bcd8042ff7e11de98a8d364f31976c04>
+private spend key: <950b90079b0f530c11801ef29e99618d3768d79d3d24972ff4b6fd9687b7b20c>
+address          : <43A7NUmo5HbhJoSKbw9bRWW4u2b8dNfhKheTR5zxoRwQ7bULK5TgUQeAvPS5EVNLAJYZRQYqXCmhdf26zG2Has35SpiF1FP>
+money received   : 1.000000
+
+
+We found our outputs:
+Our output: <d09860a6252b68045d8aa790e3d5e9b19341dcd09c6257fdb1e90918bece5b1d>, amount 1.000000
+Key image generated: <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978>
+Is output spent?: true
+```
+
+## Example result 2
+
+```bash
+
+```
+
+```bash
+
+```
+
+
+## Example result 3
+
+```bash
+
+```
+
+```bash
+
+```
+
+
 ## Compile this example
 
 If so then to download and compile this example, the following

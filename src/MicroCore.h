@@ -56,6 +56,11 @@ namespace xmreg
                           size_t& output_index);
 
         bool
+        find_tx_with_key_image(const crypto::key_image& key_img,
+                               crypto::hash& tx_hash,
+                               bool show_progress = false);
+
+        bool
         get_tx_hash_from_output_pubkey(const public_key& output_pubkey,
                                        const uint64_t& block_height,
                                        crypto::hash& tx_hash,

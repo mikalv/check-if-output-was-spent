@@ -42,11 +42,6 @@ int main(int ac, const char* av[]) {
         return 0;
     }
 
-
-    // flag indicating if viewkey and address were
-    // given by the user
-    bool VIEWKEY_AND_ADDRESS_GIVEN {false};
-
     // get other options
     auto tx_hash_opt = opts.get_option<string>("txhash");
     auto viewkey_opt = opts.get_option<string>("viewkey");
@@ -54,8 +49,6 @@ int main(int ac, const char* av[]) {
     auto address_opt = opts.get_option<string>("address");
     auto bc_path_opt = opts.get_option<string>("bc-path");
     bool testnet     = *(opts.get_option<bool>("testnet"));
-
-
 
     // get the program command line options, or
     // some default values for quick check
@@ -95,7 +88,6 @@ int main(int ac, const char* av[]) {
         return 1;
     }
 
-
     crypto::secret_key private_spend_key;
 
     // parse string representing given private spend
@@ -113,11 +105,6 @@ int main(int ac, const char* av[]) {
         cerr << "Cant parse address: " << address_str << endl;
         return 1;
     }
-
-    // create accounts_keys instance
-    cryptonote::account_keys account_keys {address,
-                                          private_spend_key,
-                                          private_view_key};
 
     path blockchain_path;
 
@@ -142,7 +129,6 @@ int main(int ac, const char* av[]) {
         return 1;
     }
 
-
     // get the high level cryptonote::Blockchain object to interact
     // with the blockchain lmdb database
     cryptonote::Blockchain& core_storage = mcore.get_core();
@@ -160,6 +146,10 @@ int main(int ac, const char* av[]) {
         return false;
     }
 
+    // create accounts_keys instance
+    cryptonote::account_keys account_keys {address,
+                                           private_spend_key,
+                                           private_view_key};
 
     // find block in which the given transaction is located
     cryptonote::block blk ;
@@ -170,7 +160,6 @@ int main(int ac, const char* av[]) {
         return false;
     }
 
-
     print("\n\ntx hash          : {} in block no. {}\n\n",
           tx_hash, cryptonote::get_block_height(blk));
 
@@ -178,8 +167,6 @@ int main(int ac, const char* av[]) {
     print("private view key : {}\n", private_view_key);
     print("private spend key: {}\n", private_spend_key);
     print("address          : {}\n", address);
-
-
 
 
     // having our transaction, first we check which output in that
@@ -194,7 +181,6 @@ int main(int ac, const char* av[]) {
     cryptonote::lookup_acc_outs(account_keys, tx, outputs_ids, money_transfered);
 
     print("money received   : {:0.6f}\n\n\n", money_transfered / 1e12);
-
 
     // get tx public key from extras field
     crypto::public_key pub_tx_key = cryptonote::get_tx_pub_key_from_extra(tx);
@@ -230,7 +216,6 @@ int main(int ac, const char* av[]) {
             {
                 cerr << "Cant get derived key for output with: " << "\n"
                      << "pub_tx_key: " << private_view_key << endl;
-
                 return 1;
             }
 
@@ -256,6 +241,21 @@ int main(int ac, const char* av[]) {
             bool is_spent = core_storage.have_tx_keyimg_as_spent(key_image);
 
             print("Is output spent?: {}\n", is_spent);
+
+            if (is_spent)
+            {
+                crypto::hash tx_with_the_key;
+
+                print("\t Searching for the transaction having the key found ...\n");
+
+                if (!mcore.find_tx_with_key_image(key_image, tx_with_the_key, true))
+                {
+                    cerr << "Transaction with the spend key not found O.o?" << endl;
+                    return 1;
+                }
+
+                print("Tx hash found: {:s}\n", tx_with_the_key);
+            }
 
             cout << endl;
         }
