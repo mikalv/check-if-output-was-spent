@@ -49,6 +49,7 @@ int main(int ac, const char* av[]) {
     auto address_opt = opts.get_option<string>("address");
     auto bc_path_opt = opts.get_option<string>("bc-path");
     bool testnet     = *(opts.get_option<bool>("testnet"));
+    bool find_tx     = *(opts.get_option<bool>("find-tx"));
 
     // get the program command line options, or
     // some default values for quick check
@@ -242,7 +243,7 @@ int main(int ac, const char* av[]) {
 
             print("Is output spent?: {}\n", is_spent);
 
-            if (is_spent)
+            if (is_spent && find_tx)
             {
                 crypto::hash tx_with_the_key;
 

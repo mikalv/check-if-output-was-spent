@@ -29,6 +29,8 @@ namespace xmreg
                  "private view key string")
                 ("spendkey,s", value<string>(),
                  "private spend key string")
+                ("find-tx,f", value<bool>()->default_value(false)->implicit_value(true),
+                 "find transaction containing key generated if it is spend (time consuming search)")
                 ("address,a", value<string>(),
                  "monero address string")
                 ("bc-path,b", value<string>(),
