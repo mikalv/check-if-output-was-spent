@@ -240,7 +240,7 @@ int main(int ac, const char* av[]) {
             key_images_found.push_back(key_image);
 
 
-            print("Key image generated: {:s}\n", key_image);
+            print(" - key image generated: {:s}\n", key_image);
 
         }
     }
@@ -280,7 +280,7 @@ int main(int ac, const char* av[]) {
     if (find_tx && !spent_key_images.empty())
     {
 
-        print("\n\t Searching for the transaction having the key found ...\n");
+        print("\nSearching for the transactions having the keys found ...\n");
 
         unordered_map<crypto::key_image, crypto::hash> txs_found;
 

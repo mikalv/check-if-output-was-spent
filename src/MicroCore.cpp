@@ -213,7 +213,7 @@ namespace xmreg
                         {
                             if (tx_idx % 100)
                             {
-                                cout  << "\r" << "\t - checking tx no: "
+                                cout  << "\r" << " - checking tx no: "
                                       << tx_idx << "/" << total_tx_count << flush;
                             }
                         }
@@ -240,7 +240,7 @@ namespace xmreg
                         {
                             if (show_progress)
                             {
-                                cout  << "\r" << "\t - tx found :-): "
+                                cout  << "\r" << " - tx found :-): "
                                       << tx_idx << "/" << total_tx_count << flush;
                             }
 
