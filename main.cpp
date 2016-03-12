@@ -293,6 +293,7 @@ int main(int ac, const char* av[]) {
             return 1;
         }
 
+        cout << endl;
 
         // find transactions cointing the spent keys found
         for (auto& key_tx: txs_found)
