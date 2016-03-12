@@ -186,6 +186,8 @@ int main(int ac, const char* av[]) {
     // get tx public key from extras field
     crypto::public_key pub_tx_key = cryptonote::get_tx_pub_key_from_extra(tx);
 
+    vector<crypto::key_image> key_images_found;
+
     if (outputs_ids.size())
     {
         print("We found our outputs: \n");
@@ -235,36 +237,73 @@ int main(int ac, const char* av[]) {
                 return 1;
             }
 
+            key_images_found.push_back(key_image);
+
 
             print("Key image generated: {:s}\n", key_image);
 
-            // finally check if the key_image generated is present in the blockchain
-            bool is_spent = core_storage.have_tx_keyimg_as_spent(key_image);
-
-            print("Is output spent?: {}\n", is_spent);
-
-            if (is_spent && find_tx)
-            {
-                crypto::hash tx_with_the_key;
-
-                print("\t Searching for the transaction having the key found ...\n");
-
-                if (!mcore.find_tx_with_key_image(key_image, tx_with_the_key, true))
-                {
-                    cerr << "\nTransaction with the spend key not found O.o?" << endl;
-                    return 1;
-                }
-
-                print("Tx hash found: {:s}\n", tx_with_the_key);
-            }
-
-            cout << endl;
         }
     }
     else
     {
         print("No our outputs were found in this transaction\n");
+        return 0;
     }
+
+    cout << endl;
+
+    vector<crypto::key_image> spent_key_images;
+
+    // check which of the key_images generated
+    // has already been spend
+    for (crypto::key_image& key_img: key_images_found)
+    {
+
+
+        // finally check if the key_image generated is present in the blockchain
+        bool is_spent = core_storage.have_tx_keyimg_as_spent(key_img);
+
+
+        if (is_spent)
+        {
+            spent_key_images.push_back(key_img);
+        }
+
+        print("Is output with key_image {:s} spent?: {}\n",
+              key_img, is_spent);
+    }
+
+
+    // search for transactions containing key_images generated
+    // which were found to be spent. So basicaly, we want to know
+    // in which transaction each key was spent.
+    if (find_tx && !spent_key_images.empty())
+    {
+
+        print("\n\t Searching for the transaction having the key found ...\n");
+
+        unordered_map<crypto::key_image, crypto::hash> txs_found;
+
+        txs_found = mcore.find_txs_with_key_images(spent_key_images, true);
+
+
+        if (txs_found.empty())
+        {
+            cerr << "\nTransactions not found for spend keys O.o?" << endl;
+            return 1;
+        }
+
+
+        // find transactions cointing the spent keys found
+        for (auto& key_tx: txs_found)
+        {
+            print(" - Key image and tx found: {:s},{:s}\n",
+                  key_tx.first, key_tx.second);
+
+        }
+
+    }
+
 
     cout << "\nEnd of program." << endl;
 

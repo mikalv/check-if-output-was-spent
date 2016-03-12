@@ -261,6 +261,88 @@ namespace xmreg
 
 
 
+    unordered_map<crypto::key_image, crypto::hash>
+    MicroCore::find_txs_with_key_images(const vector<crypto::key_image>& key_imgs,
+                                        bool show_progress)
+    {
+
+        unordered_map<crypto::key_image, crypto::hash> tx_hashes_found;
+
+        size_t no_of_keys_to_find = key_imgs.size();
+
+        uint64_t tx_idx {0};
+
+        uint64_t total_tx_count = m_blockchain_storage.get_db().get_tx_count();
+
+
+        m_blockchain_storage.for_all_transactions(
+                [&](const crypto::hash& hash, const cryptonote::transaction& tx)->bool {
+
+                    if (show_progress)
+                    {
+                        if (tx_idx % 100)
+                        {
+                            cout << "\r" << "\t - checking tx no: "
+                            << tx_idx << "/" << total_tx_count << flush;
+                        }
+                    }
+
+                    for (const crypto::key_image& key_img: key_imgs)
+                    {
+
+                        // go over all key images in a given transaction
+                        // to look for the one with matching key image
+                        auto it = std::find_if(tx.vin.begin(), tx.vin.end(),
+                                               [&](const txin_v &tx_input) {
+
+                                                   if (tx_input.type() == typeid(txin_to_key)) {
+
+                                                       const txin_to_key &tx_in_to_key
+                                                               = boost::get<txin_to_key>(tx_input);
+
+                                                       return tx_in_to_key.k_image == key_img;
+                                                   }
+
+                                                   return false;
+                                               });
+
+                        // if we found our key_image
+                        if (it != tx.vin.end())
+                        {
+
+                            if (show_progress)
+                            {
+                                cout << "\n" << "\t - tx found for key_img: " << key_img;
+                            }
+
+                            // save the found tx into the output map
+                            tx_hashes_found[key_img] = get_transaction_hash(tx);
+
+                            if (--no_of_keys_to_find == 0)
+                            {
+
+                                if (show_progress)
+                                {
+                                    cout << "\n" << "All keys found :-)" << endl;
+                                }
+
+                                return false; // we found everything
+                            }
+                        }
+                    }
+
+                    ++tx_idx;
+
+                    return true; // continue the search the iteration
+                });
+
+
+        return tx_hashes_found;
+    }
+
+
+
+
     /**
      * Returns tx hash in a given block which
      * contains given output's public key

@@ -60,6 +60,10 @@ namespace xmreg
                                crypto::hash& tx_hash,
                                bool show_progress = false);
 
+        unordered_map<crypto::key_image, crypto::hash>
+        find_txs_with_key_images(const vector<crypto::key_image>& key_img,
+                                 bool show_progress = false);
+
         bool
         get_tx_hash_from_output_pubkey(const public_key& output_pubkey,
                                        const uint64_t& block_height,
