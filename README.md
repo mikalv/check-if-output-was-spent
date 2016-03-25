@@ -169,7 +169,27 @@ the spent outputs.
 ```
 
 ```bash
+tx hash          : <cda104278309e1637bbe8da841adb25d5d4f541de428e8e3808c83f9a71fe22e> in block no. 985103
 
+private view key : <9c2edec7636da3fbb343931d6c3d6e11bcd8042ff7e11de98a8d364f31976c04>
+private spend key: <950b90079b0f530c11801ef29e99618d3768d79d3d24972ff4b6fd9687b7b20c>
+address          : <43A7NUmo5HbhJoSKbw9bRWW4u2b8dNfhKheTR5zxoRwQ7bULK5TgUQeAvPS5EVNLAJYZRQYqXCmhdf26zG2Has35SpiF1FP>
+money received   : 1.000000
+
+
+We found our outputs:
+Our output: <d09860a6252b68045d8aa790e3d5e9b19341dcd09c6257fdb1e90918bece5b1d>, amount 1.000000
+ - key image generated: <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978>
+
+Is output with key_image <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978> spent?: true
+
+Searching for the transactions having the spend keys found ...
+	 - checking tx no: 719318/1583736
+	 - tx found for key_img: <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978>
+	- all keys found! :-)
+
+The found transactions are:
+ - Key image, tx (block height) found: <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978>, <2c186ffeb72b26eb17993e81c9590e970c9432494efdb45694c70f3082583e74> (985113)
 ```
 
 

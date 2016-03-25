@@ -323,7 +323,7 @@ namespace xmreg
 
                                 if (show_progress)
                                 {
-                                    cout << "\n" << "All keys found :-)" << endl;
+                                    cout << "\n\t" << "- all keys found! :-)" << endl;
                                 }
 
                                 return false; // we found everything

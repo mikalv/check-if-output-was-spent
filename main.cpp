@@ -277,12 +277,12 @@ int main(int ac, const char* av[]) {
 
 
     // search for transactions containing key_images generated
-    // which were found to be spent. So basicaly, we want to know
+    // which were found to be spent. So basically we want to know
     // in which transaction each key was spent.
     if (find_tx && !spent_key_images.empty())
     {
 
-        print("\nSearching for the transactions having the keys found ...\n");
+        print("\nSearching for the transactions having the spend keys found ...\n");
 
         unordered_map<crypto::key_image, crypto::hash> txs_found;
 
@@ -297,11 +297,27 @@ int main(int ac, const char* av[]) {
 
         cout << endl;
 
-        // find transactions cointing the spent keys found
+        print("The found transactions are:\n");
+
+        // find transactions containing the spent keys found
         for (auto& key_tx: txs_found)
         {
-            print(" - Key image and tx found: {:s},{:s}\n",
-                  key_tx.first, key_tx.second);
+
+            // key_tx.first is the key_image
+            // key_tx.second is the tx hash with the key
+
+            cryptonote::block blk;
+
+            if (!mcore.get_block_by_tx_hash(key_tx.second, blk))
+            {
+                cerr << "Cant find block for the given transaction" << endl;
+                return false;
+            }
+
+            uint64_t blk_height = cryptonote::get_block_height(blk);
+
+            print(" - Key image, tx (block height) found: {:s}, {:s} ({:d})\n",
+                  key_tx.first, key_tx.second, blk_height);
 
         }
 
