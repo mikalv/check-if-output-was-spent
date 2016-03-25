@@ -1,4 +1,4 @@
-# Checking which outputs are ours and which were already spent
+# Checking which outputs are ours and if they were spent
 The example shows how to check which outputs in a given [Monero](https://getmonero.org/)
 transaction have already been spent. For this purpose, private view and spend keys,
 as well the corresponding address are required.
@@ -6,7 +6,7 @@ as well the corresponding address are required.
 
 ## Prerequisites
 
-The code was written and tested on Xubuntu 16.04 Beta 1 x86_64.
+The code was written and tested on Ubuntu 16.04 Beta x86_64.
 
 Instruction for Monero compilation:
  - [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-ubuntu-16-04/)
