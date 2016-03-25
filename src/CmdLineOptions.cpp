@@ -18,7 +18,7 @@ namespace xmreg
         p.add("txhash", -1);
 
         options_description desc(
-                "checkoutputs, check which outputs in a given tx are ours and wich were spent");
+                "checkoutputs, check which outputs in a given tx are ours and if were spent");
 
         desc.add_options()
                 ("help,h", value<bool>()->default_value(false)->implicit_value(true),
