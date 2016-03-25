@@ -191,18 +191,96 @@ Searching for the transactions having the spend keys found ...
 The found transactions are:
  - Key image, tx (block height) found: <ef42203f6a80c7ecc42a6f4c78ecf126696a7f760eb86550bd639acbe7ab5978>, <2c186ffeb72b26eb17993e81c9590e970c9432494efdb45694c70f3082583e74> (985113)
 ```
-
+./checkoutputs -a 41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB -v fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309 -s 1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03 -f -t 1b27f4d6298e0a893609d965092802bef7dbfc40826e92f5957be9cf62d5031b
 
 ## Example result 3
 
-```bash
+Test non-spend output.
 
+
+```bash
+./checkoutputs -a 41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB -v fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309 -s 1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03 -f -t 1b27f4d6298e0a893609d965092802bef7dbfc40826e92f5957be9cf62d5031b
 ```
 
 ```bash
+tx hash          : <1b27f4d6298e0a893609d965092802bef7dbfc40826e92f5957be9cf62d5031b> in block no. 985026
 
+private view key : <fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309>
+private spend key: <1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03>
+address          : <41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB>
+money received   : 0.070000
+
+
+We found our outputs:
+Our output: <ab33da6d8827607f224d775c6fbead998d254db767feca3e8285d30fffbf4d6e>, amount 0.070000
+ - key image generated: <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9>
+
+Is output with key_image <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9> spent?: false
 ```
 
+## Example result 4
+
+What will be the result if the output (i.e., ab33da6d8827607f224d775c6fbead998d254db767feca3e8285d30fffbf4d6e) from example 3 is spent? For this we just repeat the command and get new results.
+
+```bash
+./checkoutputs -a 41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB -v fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309 -s 1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03 -f -t 1b27f4d6298e0a893609d965092802bef7dbfc40826e92f5957be9cf62d5031b
+```
+
+```bash
+tx hash          : <1b27f4d6298e0a893609d965092802bef7dbfc40826e92f5957be9cf62d5031b> in block no. 985026
+
+private view key : <fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309>
+private spend key: <1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03>
+address          : <41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB>
+money received   : 0.070000
+
+
+We found our outputs:
+Our output: <ab33da6d8827607f224d775c6fbead998d254db767feca3e8285d30fffbf4d6e>, amount 0.070000
+ - key image generated: <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9>
+
+Is output with key_image <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9> spent?: true
+
+Searching for the transactions having the spend keys found ...
+	 - checking tx no: 306969/1583765
+	 - tx found for key_img: <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9>
+	- all keys found! :-)
+
+The found transactions are:
+ - Key image, tx (block height) found: <d3aee79cc00cdeafd34f5b348780cd1590f6cd004eb37235c6858eab0ec185c9>, <75d9a1980294a9c6a96736c8e546b40f6f2640c1fba61853ccd986891c597d31> (1010850)
+```
+
+
+## Example result 5
+
+So now lets check the transaction in which we got our change, i.e., (tx hash: 75d9a1980294a9c6a96736c8e546b40f6f2640c1fba61853ccd986891c597d31) from example 4
+
+```bash
+./checkoutputs -a 41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB -v fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309 -s 1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03 -f -t 75d9a1980294a9c6a96736c8e546b40f6f2640c1fba61853ccd986891c597d31
+```
+
+```bash
+tx hash          : <75d9a1980294a9c6a96736c8e546b40f6f2640c1fba61853ccd986891c597d31> in block no. 1010850
+
+private view key : <fed77158ec692fe9eb951f6aeb22c3bda16fe8926c1aac13a5651a9c27f34309>
+private spend key: <1eaa41781d5f880dc69c9379e281225c781a6db8dc544a26008e7a07890afa03>
+address          : <41vEA7Ye8Bpeda6g59v5t46koWrVn2PNgEKgzquJjmiKCFTsh9gajr8J3pad49rqu581TAtFGCH9CYTCkYrCpuWUG9GkgeB>
+money received   : 0.450000
+
+
+We found our outputs:
+Our output: <8c086f9fe0537aef00bc74e8cb912425f34c71b39f5d5d93fb7ba4c3398ffd5d>, amount 0.050000
+ - key image generated: <df1504b992cc9fafba99461d7ca53a7a8cac224864ea4d113fcd331b4c2c052e>
+Our output: <ada4ed75182403d858ad1fa26bba7f51c20c0f596e920da71fd8961474d6b535>, amount 0.400000
+ - key image generated: <79533fc9827883dc9a497d3d7959cee4c232b675103a970b8c98427cf8137fca>
+
+Is output with key_image <df1504b992cc9fafba99461d7ca53a7a8cac224864ea4d113fcd331b4c2c052e> spent?: false
+Is output with key_image <79533fc9827883dc9a497d3d7959cee4c232b675103a970b8c98427cf8137fca> spent?: false
+```
+
+The outouts, as expected, havent been spent yet, as we just got them. But we can already
+see that key images for these ouputs that will be generated when the outputs are going to
+be spend.
 
 ## Compile this example
 
@@ -224,7 +302,7 @@ make
 ```
 
 The Monero C++ development environment was set as shown in the following link:
-- [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-xubuntu-16-04-beta-1/)
+- [Ubuntu 16.04 x86_64](https://github.com/moneroexamples/compile-monero-09-on-ubuntu-16-04/)
 
 ## How can you help?
 
