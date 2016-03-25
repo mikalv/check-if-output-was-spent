@@ -29,7 +29,7 @@ int main(int ac, const char* av[]) {
     // lets check our keys
     print("private view key : {}\n", private_view_key);
     print("private spend key: {}\n", private_spend_key);
-    print("address          : {}\n\n\n", address);
+    print("address          : {}\n", address);
 
 
     // having our transaction, first we check which output in that
@@ -39,14 +39,16 @@ int main(int ac, const char* av[]) {
     std::vector<size_t> outputs_ids;
 
     uint64_t money_transfered {0};
-    uint64_t miner_money_transfered {0};
 
     // look for our outputs in the transaction and the corresponding block reward
     cryptonote::lookup_acc_outs(account_keys, tx, outputs_ids, money_transfered);
-    cryptonote::lookup_acc_outs(account_keys, blk.miner_tx, outputs_ids, miner_money_transfered);
+
+    print("money received   : {:0.6f}\n\n\n", money_transfered / 1e12);
 
     // get tx public key from extras field
     crypto::public_key pub_tx_key = cryptonote::get_tx_pub_key_from_extra(tx);
+
+    vector<crypto::key_image> key_images_found;
 
     if (outputs_ids.size())
     {
@@ -71,13 +73,14 @@ int main(int ac, const char* av[]) {
 
             // public tx key is combined with our private view key
             // to create, so called, derived key.
+            // the derived key is used to produce the key_image
+            // that we want.
             crypto::key_derivation derivation;
 
             if (!generate_key_derivation(pub_tx_key, private_view_key, derivation))
             {
                 cerr << "Cant get derived key for output with: " << "\n"
                      << "pub_tx_key: " << private_view_key << endl;
-
                 return 1;
             }
 
@@ -96,21 +99,90 @@ int main(int ac, const char* av[]) {
                 return 1;
             }
 
+            key_images_found.push_back(key_image);
 
-            print("Key image generated: {:s}\n", key_image);
 
-            // finally check if the key_image generated is present in the blockchain
-            bool is_spent = core_storage.have_tx_keyimg_as_spent(key_image);
+            print(" - key image generated: {:s}\n", key_image);
 
-            print("Is output spent?: {}\n", is_spent);
-
-            cout << endl;
         }
     }
     else
     {
         print("No our outputs were found in this transaction\n");
+        return 0;
     }
+
+    cout << endl;
+
+    vector<crypto::key_image> spent_key_images;
+
+    // check which of the key_images generated
+    // has already been spend
+    for (crypto::key_image& key_img: key_images_found)
+    {
+
+
+        // finally check if the key_image generated is present in the blockchain
+        bool is_spent = core_storage.have_tx_keyimg_as_spent(key_img);
+
+
+        if (is_spent)
+        {
+            spent_key_images.push_back(key_img);
+        }
+
+        print("Is output with key_image {:s} spent?: {}\n",
+              key_img, is_spent);
+    }
+
+
+    // search for transactions containing key_images generated
+    // which were found to be spent. So basically we want to know
+    // in which transaction each key was spent.
+    if (find_tx && !spent_key_images.empty())
+    {
+
+        print("\nSearching for the transactions having the spend keys found ...\n");
+
+        unordered_map<crypto::key_image, crypto::hash> txs_found;
+
+        txs_found = mcore.find_txs_with_key_images(spent_key_images, true);
+
+
+        if (txs_found.empty())
+        {
+            cerr << "\nTransactions not found for spend keys O.o?" << endl;
+            return 1;
+        }
+
+        cout << endl;
+
+        print("The found transactions are:\n");
+
+        // find transactions containing the spent keys found
+        for (auto& key_tx: txs_found)
+        {
+
+            // key_tx.first is the key_image
+            // key_tx.second is the tx hash with the key
+
+            cryptonote::block blk;
+
+            if (!mcore.get_block_by_tx_hash(key_tx.second, blk))
+            {
+                cerr << "Cant find block for the given transaction" << endl;
+                return false;
+            }
+
+            uint64_t blk_height = cryptonote::get_block_height(blk);
+
+            print(" - Key image, tx (block height) found: {:s}, {:s} ({:d})\n",
+                  key_tx.first, key_tx.second, blk_height);
+
+        }
+
+    }
+
 
     cout << "\nEnd of program." << endl;
 
