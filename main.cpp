@@ -13,8 +13,10 @@ using xmreg::print_sig;
 
 using boost::filesystem::path;
 
-unsigned int epee::g_test_dbg_lock_sleep = 0;
 
+namespace epee {
+    unsigned int g_test_dbg_lock_sleep = 0;
+}
 
 
 struct for_signatures
