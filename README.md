@@ -350,7 +350,7 @@ Is output with key_image <df1504b992cc9fafba99461d7ca53a7a8cac224864ea4d113fcd33
 Is output with key_image <79533fc9827883dc9a497d3d7959cee4c232b675103a970b8c98427cf8137fca> spent?: false
 ```
 
-The outouts, as expected, havent been spent yet, as we just got them. But we can already
+The outputs, as expected, havent been spent yet, as we just got them. But we can already
 see that key images for these ouputs that will be generated when the outputs are going to
 be spend.
 
